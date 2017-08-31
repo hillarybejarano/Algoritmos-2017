@@ -1,0 +1,77 @@
+#include "stdafx.h"
+#include <iostream>
+#include "conio.h"
+#include <string>
+#include "stdlib.h"
+#define MAX 100
+using namespace std;
+
+float areaPalindromo(float a, float b);
+void concatenar(int v1[MAX],int v2[MAX]);
+string invertir(string var2);
+
+void main ()
+{
+	int x;
+	float base,altura,AreaPar;
+	int v1[MAX],v2[MAX];
+	int n,opcion;
+	string cadena;
+	void cargar(int v[MAX],int n);
+
+	do{
+		cout<< "---------MENU--------"<<endl;
+		cout<< "1.-Calculo de area"<<endl;
+		cout<< "2.-Vector"<<endl;
+		cout<< "3.-Invertir cadena"<<endl;
+		cout<< "4.- Salir"<<endl;
+		cout<< "Ingrese opcion"<<endl;
+		cin>>opcion;
+		switch(opcion)
+		{
+		case 1:cout<< "area de un palindromo"<<endl;
+			   cout<< "ingrese base"<<endl;
+			   cin>>base;
+			   cout<< "ingrese altura"<<endl;
+			   cin>>altura;
+			   AreaPar = areaPalindromo(base,altura);
+			   cout<< "el area del palindromo es"<<AreaPar<<endl;
+			   break;
+		case 2:cout<< "concatenar dos vectores"<<endl;
+			   cargar(v1,n);
+			   cargar(v2,n);
+			   concatenar(v1,v2);
+			   break;
+		case 3: 
+				cout<<"ingrese cadena"<<endl;
+				cin.ignore();
+				getline(cin,cadena);
+				cout<<"la cadena invertida es:"<<invertir(cadena)<<endl;
+				break;
+		case 0: cout<<"salir del menu";
+		default: cout<<"opcion invalida, ingrese otra opcion";
+		}
+		getch();
+		system("cls");
+	}while(opcion!=0);
+	getch();
+}
+
+float areaPalindromo(float a, float b){
+	float x;
+	x=a*b;
+	return x;
+}
+string invertir(string var3){
+	int lng;
+	char aux;
+	string var2=var3;
+	lng = var2.length();
+	for(int i=0;i<lng/2;i++)
+	{
+		aux = var2.at(i);
+		var2[i] = var2[lng-1-i];
+		var2[lng-1-i] = aux;
+	}
+	return var2;
+}
