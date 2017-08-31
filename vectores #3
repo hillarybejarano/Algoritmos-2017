@@ -1,0 +1,83 @@
+#include "stdafx.h"
+#include <iostream>
+#include "conio.h"
+#include "math.h"
+#define MAX 100
+using namespace std;
+void cargar (double vec[], int tam);
+void mostrar (double vec[], int tam);
+void promedio (double vec[], int tam);
+void burbuja (int vec[], int n);
+void intercambiar (int vec1[], int vec2[], int vec3[], int n1, int n2, int n3)
+void main()
+{
+	int tam;
+	double vec[MAX];
+	cout<<"Ingrese el tamanho de sus vactores: ";
+	cin>>tam;
+	cargar (vec,tam);
+	mostrar (vec,tam);
+	promedio (vec,tam);
+	getch();
+
+}
+void cargar (double vec[], int tam)
+{
+	for (int i=0;i<tam; i++)
+	{
+		cout<<"vec["<<i<<"]:"<<endl;
+		cin>>vec[i];
+	}
+}
+void mostrar (double vec[], int tam)
+{
+	for (int i=0;i<tam; i++)
+	{
+		cout<<"------------------------"<<endl;
+		cout<<"vec["<<i<<"]:"<<vec[i]<<endl;
+	}
+}
+
+void promedio (double vec[], int tam)
+{
+	
+	double promedi=0;
+	for (int i=0; i<tam; i++)
+	{
+		promedi=promedi+vec[i];
+	}
+	promedi=promedi/tam;
+		cout<<"El promedio sera: "<<promedi<<endl;
+	
+}
+void burbuja (int vec[], int n)
+{
+	for (int i=0; i<n-1; i++)
+		for (int j=i+1; j<n; j++)
+		{
+			aux=vec[i];
+			vec[i]=vec[j];
+			vec[j]=aux;
+		}
+}
+void mezclar (int vec1[], int vec2[], int vec3[], int n1, int n2, int n3)
+{
+	int i=0,j=0,k=0;
+	while((i<n1)&&(j<n2))
+	{
+		if(vec1[i]<vec2[j]){
+		vec3[k]=vec1[i];
+		i++;
+		k++;
+		}
+		else
+		{
+			if(vec1[i]<vec2[j]){
+		vec3[k]=vec2[j];
+		j++;
+		k++;
+		}
+	}
+}
+
+
