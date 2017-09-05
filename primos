@@ -1,0 +1,56 @@
+#include "stdafx.h"
+#include <iostream>
+#include "conio.h"
+#define MAX 100
+
+using namespace std;
+
+void cargar(int v[], int n);
+bool esPrimo (int n);
+void eliminarPosicion(int &n, int v[], int pos);
+void eliminarPrimos (int &n, int v[]);
+
+void main()
+{
+	int v[MAX], n,pos;
+	cout<<"Eliminar primos"<<endl;
+	cout<<"Introduzca cantidad de elementos:"<<endl;
+	cin>>n;
+	cargar(v,n);
+	eliminarPrimos(n,v);
+	eliminarPosicion(n,v,pos);
+	getch();
+}
+
+void cargar(int v[], int n){
+	cout<<"Introduzca elementos del vector:"<<endl;
+	for(int i=0; i<n; i++){
+	cout<<"v["<<i<<"]=";
+	cin>>v[i];
+	}
+}
+
+bool esPrimo(int n)
+{ if (n==0 || n==1) return false;
+for (int i=2; i<n; i++)
+{if (n%i == 0) return false;
+}
+return true;
+}
+
+void eliminarPosicion (int &n, int v[], int pos)
+{{for(int i=pos; i<n-1; i++)
+v[i] = v[i+1];
+}
+n--;
+}
+
+void eliminarPrimos(int &n, int v[])
+{for(int i=0; i<n; i++)
+{if(esPrimo(v[i])) eliminarPosicion(n,v,i);
+}
+}
+
+
+
+
