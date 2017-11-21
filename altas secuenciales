@@ -1,0 +1,213 @@
+// MoviLab.cpp : Defines the entry point for the console application.
+//
+#include "stdafx.h"
+#include <iostream>
+#include "conio.h"
+#include <string>
+#include "stdlib.h"
+#include "ctype.h"
+using namespace std;
+
+struct Usuarios
+{
+	int Id_Usuario;
+	string Nombre;
+	string Apellido;
+	string Usuario;
+	string Password;
+	string Estado;
+};
+
+struct Paciente
+{
+	int Id_Paciente;
+	string Nombre;
+	string Apellido;
+	string Direccion_Domicilio;
+	string Num_Telf;
+};
+
+struct Servicio{
+	int Id_Servicio;
+	string Nombre;
+	string tipo;
+	int Precio;
+};
+
+struct Visita{
+	int Id_Visita;
+	int Id_Paciente;
+	int Id_Usuario;
+	string Fecha;
+};
+
+struct Visita_Servicio{
+	int Id_VisitaSer;
+	int Id_Visita;
+	int Id_Servicio;
+	int Cantidad;
+	int Subtotal;
+};
+
+
+void crear_Archivo_Paciente();
+bool Verificar_Cadena(string x);
+bool Verificar_Numero(string x);
+
+void Alta_Paciente();
+void Baja_Paciente();
+void Modificacion_Paciente();
+void Consulta_Paciente();
+
+void Inicia_Sesion(string usuario, string password);
+
+void menu_Servicios();
+void Alta_Servicios();
+void Baja_Servicios();
+void Modificacion_Servicios();
+void Consulta_Servicios();
+
+
+void registrar_Visita();
+
+int main()
+{
+	int op=0;
+	do{
+		cout<<"-------------------------------------------------------------"<<endl;
+		cout<<"----          MOVILAB                                    ----"<<endl;
+		cout<<"-------------------------------------------------------------"<<endl;
+		/*cout<<" 1 .- Ingrese al Sistema."<<endl;*/
+		cout<<" 1 .- Crear Archivo Paciente."<<endl;
+		cout<<" 2 .- Alta de Pacientes."<<endl;
+		cout<<" 0 .- Salir."<<endl;
+		cout<<endl;
+		cout<<endl;
+		cout<<"-------------------------------------------------------------"<<endl;
+		
+		cout<<"Elija una opcion : ";
+		cin>>op;
+
+		switch(op){
+		case 1:
+			crear_Archivo_Paciente();
+			break;
+		case 2:
+			Alta_Paciente();
+			break;
+		}
+	}while(op != 0);
+	_gettch();
+	return 0;
+}
+
+
+
+void crear_Archivo_Paciente(){
+	FILE *ptr;
+	ptr = fopen("Paciente.dat", "wb");
+	if (ptr != NULL)
+	{
+		cout<<"El Archivo ha sido creado exitosamente..!"<<endl;
+	}
+	else
+	{
+		cout<<"Error, El Archivo no pudo crearse"<<endl;
+	}
+	fclose(ptr);
+}
+
+
+void Alta_Paciente(){
+	int id;
+	char op;
+	long dir;
+	FILE *ptr;
+	Paciente reg;
+
+	cout << "\n\rALTA DE REGISTROS DE CLIENTE";
+	ptr = fopen("Paciente.dat","rb+");
+	if(ptr == NULL){
+		cout << "\n\n\n\rNo existe el archivo !!!";
+		cout << "\n\r<<< Oprima cualquier tecla para continuar >>>";
+		_getch();
+		return;
+	}
+	
+	cout << "\n\n\n\rId de Paiente: "; 
+	cin >> id;
+	dir = id * sizeof(reg); 
+	fseek(ptr, dir, SEEK_SET);
+	fread(&reg, sizeof(reg), 1, ptr);	
+	if(reg.Id_Paciente != id){
+		cout << "Ingrese Nombre : ";
+		do{
+			getline(cin, reg.Nombre);
+		} while(!Verificar_Cadena(reg.Nombre));
+		cout << "Ingrese Apellido : ";
+		do{
+			getline(cin, reg.Apellido);
+		} while(!Verificar_Cadena(reg.Apellido));
+		cout << "Ingrese Direccion : ";
+		getline(cin, reg.Direccion_Domicilio);
+		cout << "Ingrese Num Telef : ";
+		do{
+			getline(cin, reg.Num_Telf);
+		} while(!Verificar_Numero(reg.Num_Telf));
+		reg.Id_Paciente = id;
+		fseek(ptr, dir, SEEK_SET); 
+		fwrite(&reg, sizeof(reg), 1, ptr); 
+		fclose(ptr);
+		cout << "\n\n\n\rRegistro guardado!";
+		cout << "\n\r<<< Oprima cualquier tecla para continuar >>>";
+		getch();
+	} else {
+		cout << "\n\n\n\rEl Id Paciente ya existe !!!";
+		cout << "\n\r<<< Oprima cualquier tecla para continuar >>>";
+		_getch();
+		return;
+	}
+}
+
+
+bool Verificar_Numero(string x)
+{
+	bool k = false;
+	int i = 0;
+	while (i < x.length())
+	{
+		if (isdigit(x[i]))
+		{
+			k = true;
+		}
+		else
+		{
+			k = false;
+			i = x.length();
+		}
+		i++;
+	}
+	return k;
+}
+
+bool Verificar_Cadena(string x)
+{
+	bool k = false;
+	int i = 0;
+	while (i < x.length())
+	{
+		if (isalpha(x[i]))
+		{
+			k = true;
+		}
+		else
+		{
+			i = x.length();
+			k = false;
+		}
+		i++;
+	}
+	return k;
+}
+
+
